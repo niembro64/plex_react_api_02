@@ -9,6 +9,7 @@
 }
 
 .c {
-  flex: 1;
+  width: 400px;
   background-color: cyan;
+  border: 1px solid black;
 }

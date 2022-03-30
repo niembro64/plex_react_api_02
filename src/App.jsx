@@ -14,10 +14,47 @@ var XMLParser = require("react-xml-parser");
 // var client = new PlexAPI("192.168.0.1");
 
 function App() {
+  const [onlines, setOnlines] = useState([]);
+  const [connecteds, setConnecteds] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [devices, setDevices] = useState([]);
   const [librarySections, setLibrarySections] = useState([]);
 
+  const fetchInfoConnecteds = (event) => {
+    event.preventDefault();
+
+    console.log("calling Connecteds API");
+
+    fetch(
+      "http://192.168.1.25:32400/connections?X-Plex-Token=KuRBXRrSd_ZoxothJ9yv"
+    )
+      .then((data) => data.text())
+      .then((res) => {
+        // console.log("GETTING CONNECTEDS");
+        // console.log(res.split("\n"));
+        setConnecteds(res.split("\n"));
+      })
+      .catch((err) => console.log(err));
+  };
+  const fetchInfoOnlines = (event) => {
+    event.preventDefault();
+
+    console.log("calling Onlines API");
+
+    fetch(
+      "https://plex.tv/api/resources?X-Plex-Token=KuRBXRrSd_ZoxothJ9yv"
+    )
+      .then((data) => data.text())
+      .then((res) => {
+        console.log("HEREEEE");
+        // console.log(res);
+
+        var xml = new XMLParser().parseFromString(res); // Assume xmlText contains the example XML
+         console.log(xml.children);
+        setOnlines(xml.children);
+      })
+      .catch((err) => console.log(err));
+  };
   const fetchInfoAccounts = (event) => {
     event.preventDefault();
 
@@ -81,6 +118,39 @@ function App() {
       <h1>Plex API XML Parser</h1>
       <div className="b">
         <div className="c">
+          <h1>Connecteds</h1>
+          <button
+            className="btn btn-primary mx-4"
+            onClick={fetchInfoConnecteds}
+          >
+            Get Connecteds
+          </button>
+          {connecteds.map((item, i) => {
+            // return <p key={i}>{item.name}{item.url}</p>;
+            return (
+              <>
+                <p key={i}>{item}</p>
+                {/* <p key={i}>{item.attributes.defaultAudioLanguage}</p> */}
+              </>
+            );
+          })}
+        </div>
+        <div className="c">
+          <h1>Onlines</h1>
+          <button className="btn btn-primary mx-4" onClick={fetchInfoOnlines}>
+            Get Onlines
+          </button>
+          {onlines.map((item, i) => {
+            // return <p key={i}>{item.name}{item.url}</p>;
+            return (
+              <>
+                <p key={i}>{item.attributes.name}</p>
+                {/* <p key={i}>{item.attributes.defaultAudioLanguage}</p> */}
+              </>
+            );
+          })}
+        </div>
+        <div className="c">
           <h1>Accounts</h1>
           <button className="btn btn-primary mx-4" onClick={fetchInfoAccounts}>
             Get Accounts
@@ -111,8 +181,11 @@ function App() {
           })}
         </div>
         <div className="c">
-          <h1>Movies</h1>{" "}
-          <button className="btn btn-primary mx-4" onClick={fetchInfoLibrarySections}>
+          <h1>Library Sections</h1>{" "}
+          <button
+            className="btn btn-primary mx-4"
+            onClick={fetchInfoLibrarySections}
+          >
             Get Library Sections
           </button>
           {librarySections.map((item, i) => {
