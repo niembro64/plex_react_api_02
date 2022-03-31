@@ -3,13 +3,33 @@
 }
 
 .b {
-  background-color: pink;
+  background-color: rgba(179, 179, 179, 0.285);
   display: flex;
   justify-content: center;
+  padding: 3px;
+  border: 1px solid black;
+  border-radius: 4px;
 }
 
 .c {
   width: 400px;
-  background-color: cyan;
+  background-color: rgba(174, 174, 174, 0.358);
   border: 1px solid black;
+  border-radius: 4px;
+  margin: 3px;
+}
+
+.btn {
+  margin: 8px;
+}
+
+.leftj {
+  text-align: left;
+  overflow-wrap: break-word;
+  border: 1px solid black;
+  border-radius: 4px;
+  margin: 3px;
+  color: white;
+  background-color: black;
+
 }

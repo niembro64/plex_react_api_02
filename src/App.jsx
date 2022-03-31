@@ -32,7 +32,19 @@ function App() {
       .then((res) => {
         // console.log("GETTING CONNECTEDS");
         // console.log(res.split("\n"));
-        setConnecteds(res.split("\n"));
+        var connections = res.split("\n");
+        var connectionsSplit = [];
+        var small = [];
+        for (var i = 0; i < connections.length; i++) {
+          connectionsSplit[i] = connections[i].split(" - ");
+          small = connectionsSplit[i][0].split(" ");
+          connectionsSplit[i].unshift("asdf");
+          connectionsSplit[i][0] = small[0];
+          connectionsSplit[i][1] = small[1];
+        }
+        console.log(connectionsSplit);
+
+        setConnecteds(connectionsSplit);
       })
       .catch((err) => console.log(err));
   };
@@ -41,16 +53,14 @@ function App() {
 
     console.log("calling Onlines API");
 
-    fetch(
-      "https://plex.tv/api/resources?X-Plex-Token=KuRBXRrSd_ZoxothJ9yv"
-    )
+    fetch("https://plex.tv/api/resources?X-Plex-Token=KuRBXRrSd_ZoxothJ9yv")
       .then((data) => data.text())
       .then((res) => {
         console.log("HEREEEE");
         // console.log(res);
 
         var xml = new XMLParser().parseFromString(res); // Assume xmlText contains the example XML
-         console.log(xml.children);
+        console.log(xml.children);
         setOnlines(xml.children);
       })
       .catch((err) => console.log(err));
@@ -125,13 +135,13 @@ function App() {
           >
             Get Connecteds
           </button>
-          {connecteds.map((item, i) => {
-            // return <p key={i}>{item.name}{item.url}</p>;
+          {connecteds.map((itemi, i) => {
             return (
-              <>
-                <p key={i}>{item}</p>
-                {/* <p key={i}>{item.attributes.defaultAudioLanguage}</p> */}
-              </>
+              <div key={i} className="leftj">
+                {itemi.map((itemj, j) => {
+                  return <p key={j}>{itemj}</p>;
+                })}
+              </div>
             );
           })}
         </div>
@@ -181,12 +191,12 @@ function App() {
           })}
         </div>
         <div className="c">
-          <h1>Library Sections</h1>{" "}
+          <h1>Sections</h1>{" "}
           <button
             className="btn btn-primary mx-4"
             onClick={fetchInfoLibrarySections}
           >
-            Get Library Sections
+            Get Sections
           </button>
           {librarySections.map((item, i) => {
             // return <p key={i}>{item.name}{item.url}</p>;
