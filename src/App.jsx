@@ -41,17 +41,23 @@ function App() {
           connectionsSplit[i].unshift("asdf");
           connectionsSplit[i][0] = small[0];
           connectionsSplit[i][1] = small[1];
-          console.log(connectionsSplit[i][1]);
-          // if (connectionsSplit[i][1][0] < 10) {
-          // console.log(connectionsSplit[i][1].split(":"));
-          // small = connectionsSplit[i][1].split(":");
-          // connectionsSplit[i].unshift("asdfasdf");
-          // connectionsSplit[i][0] = connectionsSplit[i][1];
-          // // console.log(connectionsSplit[i]);
-          // // console.log(small);
-          // connectionsSplit[i][1] = small[0];
-          // connectionsSplit[i][2] = small[1];
-          // }
+          // console.log(connectionsSplit[i][1]);
+
+   
+
+          if (
+            connectionsSplit[i][0] !== "" &&
+            connectionsSplit[i][1] !== "???"
+          ) {
+            console.log(connectionsSplit[i][1].split(":"));
+            small = connectionsSplit[i][1].split(":");
+            connectionsSplit[i].unshift("asdfasdf");
+            connectionsSplit[i][0] = connectionsSplit[i][1];
+            // console.log(connectionsSplit[i]);
+            // console.log(small);
+            connectionsSplit[i][1] = small[0];
+            connectionsSplit[i][2] = small[1];
+          }
         }
         console.log(connectionsSplit);
 
